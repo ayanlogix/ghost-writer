@@ -1,8 +1,8 @@
 # ✍️ Ghost-Writer | Neural Content Orchestration Engine
 
-![Status](https://img.shields.io/badge/STATUS-OPERATIONAL-success?style=for-the-badge&logo=statuspage)
-![License](https://img.shields.io/badge/LICENSE-MIT-blue?style=for-the-badge)
-![Tech](https://img.shields.io/badge/TECH-NEURAL_CONTENT-purple?style=for-the-badge)
+[![Status](https://img.shields.io/badge/STATUS-OPERATIONAL-success?style=for-the-badge&logo=statuspage)](https://github.com/ayanlogix/ghost-writer/commits/main)
+[![License](https://img.shields.io/badge/LICENSE-MIT-blue?style=for-the-badge)](https://github.com/ayanlogix/ghost-writer/blob/main/LICENSE)
+[![Tech](https://img.shields.io/badge/TECH-NEURAL_CONTENT-purple?style=for-the-badge)](https://github.com/ayanlogix/ghost-writer/)
 
 **Ghost-Writer** is a high-end neural content orchestration engine designed for high-performance text generation and content architecture. It provides an elite workspace for crafting automated narratives and business intelligence reports.
 
