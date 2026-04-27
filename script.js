@@ -97,15 +97,23 @@ document.addEventListener('DOMContentLoaded', () => {
         const results = [];
         
         try {
-            // Generate for each platform
+            // Simulation Mode for GitHub Pages (No Backend)
+            await new Promise(resolve => setTimeout(resolve, 1500)); // Simulate thinking
+
             for (const platform of selectedPlatforms) {
-                const response = await fetch('/api/generate', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ idea, platform, tone: currentTone })
-                });
-                const data = await response.json();
-                results.push({ platform, content: data.content });
+                let content = "";
+                if (platform === 'linkedin') {
+                    content = `🚀 **Transforming the Future with ${idea}!**\n\nI'm thrilled to announce that we are pushing the boundaries of what's possible. By leveraging ${idea}, we are streamlining workflows and empowering the next generation of creators.\n\n#Innovation #TechTrends #Ayanlogix`;
+                } else if (platform === 'twitter') {
+                    content = `1/🧵 Just finished manifesting a new vision for ${idea}. Here's why this changes everything for the ecosystem... \n\n#AI #FutureTech #Ayanlogix`;
+                } else {
+                    content = `Capturing the essence of ${idea}. ✨ A new era of digital manifestation begins today. \n\n#Design #Ayanlogix #Creativity`;
+                }
+                
+                if (currentTone === 'witty') content = `Manifesting ${idea} like a pro. 🔮 Why wait for the future when you can code it today? 😉 #Ayanlogix`;
+                if (currentTone === 'inspiring') content = `Believe in the power of ${idea}. 🌟 Every great achievement started as a simple idea. Today, we make it real. #Manifest #Ayanlogix`;
+
+                results.push({ platform, content });
             }
 
             displayResults(results);
