@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GhostWriter AI | Content Engine</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✍️</text></svg>">
+</head>
+<body>
+    <div class="glow-container">
+        <div class="aura aura-1"></div>
+        <div class="aura aura-2"></div>
+    </div>
+
+    <main class="app-shell">
+        <aside class="sidebar">
+            <div class="logo">
+                <span class="logo-icon">✨</span>
+                <h1 class="logo-text">GhostWriter</h1>
+            </div>
+
+            <nav class="history-section">
+                <h3>Recent Works</h3>
+                <div id="historyList" class="history-list">
+                    <p class="empty-history">Your generated stories will appear here.</p>
+                </div>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="api-key-badge">Gemini AI Active</div>
+            </div>
+        </aside>
+
+        <section class="workspace">
+            <header class="workspace-header">
+                <h2>Content Generation</h2>
+                <div class="tone-selector">
+                    <button class="tone-btn active" data-tone="professional">Professional</button>
+                    <button class="tone-btn" data-tone="witty">Witty</button>
+                    <button class="tone-btn" data-tone="inspiring">Inspiring</button>
+                    <button class="tone-btn" data-tone="casual">Casual</button>
+                </div>
+            </header>
+
+            <div class="input-area">
+                <textarea id="ideaInput" placeholder="What's your big idea or story today? Describe it in a few words..."></textarea>
+                <div class="platform-toggles">
+                    <label class="platform-chip">
+                        <input type="checkbox" name="platform" value="linkedin" checked>
+                        <span>LinkedIn</span>
+                    </label>
+                    <label class="platform-chip">
+                        <input type="checkbox" name="platform" value="twitter">
+                        <span>Twitter Thread</span>
+                    </label>
+                    <label class="platform-chip">
+                        <input type="checkbox" name="platform" value="instagram">
+                        <span>Instagram</span>
+                    </label>
+                </div>
+                <button id="generateBtn" class="primary-btn">
+                    <span class="btn-text">Manifest Content</span>
+                    <span class="loader"></span>
+                </button>
+            </div>
+
+            <div class="results-area" id="resultsArea">
+                <!-- AI results will stream here -->
+                <div class="results-placeholder">
+                    <p>Enter your idea and manifest it into reality.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,129 @@
+document.addEventListener('DOMContentLoaded', () => {
+    const ideaInput = document.getElementById('ideaInput');
+    const generateBtn = document.getElementById('generateBtn');
+    const resultsArea = document.getElementById('resultsArea');
+    const historyList = document.getElementById('historyList');
+    const toneButtons = document.querySelectorAll('.tone-btn');
+
+    let currentTone = 'professional';
+    let history = JSON.parse(localStorage.getItem('ghostwriter_history') || '[]');
+
+    // Initialize UI
+    const updateHistoryUI = () => {
+        if (history.length === 0) {
+            historyList.innerHTML = '<p class="empty-history">Your generated stories will appear here.</p>';
+            return;
+        }
+
+        historyList.innerHTML = history.slice(0, 10).map((item, index) => `
+            <div class="history-item" onclick="window.loadFromHistory(${index})">
+                <span class="history-platform">${item.platforms.join(', ')}</span>
+                <span class="history-idea">${item.idea.substring(0, 30)}...</span>
+            </div>
+        `).join('');
+    };
+
+    window.loadFromHistory = (index) => {
+        const item = history[index];
+        ideaInput.value = item.idea;
+        // Scroll to results or just show them? Let's just pop the results back in
+        displayResults(item.results);
+    };
+
+    const displayResults = (results) => {
+        resultsArea.innerHTML = results.map(res => `
+            <div class="result-card">
+                <div class="result-header">
+                    <span class="result-tag">${res.platform}</span>
+                    <button class="action-btn" onclick="window.copyContent(this)">Copy</button>
+                </div>
+                <div class="result-content">${res.content}</div>
+                <div class="result-actions">
+                    <button class="action-btn" onclick="window.editContent(this)">Edit</button>
+                    <button class="action-btn" onclick="window.shareContent(this)">Share</button>
+                </div>
+            </div>
+        `).join('');
+    };
+
+    window.copyContent = (btn) => {
+        const content = btn.closest('.result-card').querySelector('.result-content').innerText;
+        navigator.clipboard.writeText(content);
+        const originalText = btn.innerText;
+        btn.innerText = 'Copied!';
+        setTimeout(() => btn.innerText = originalText, 2000);
+    };
+
+    window.editContent = (btn) => {
+        const contentDiv = btn.closest('.result-card').querySelector('.result-content');
+        const isEditing = contentDiv.contentEditable === 'true';
+        contentDiv.contentEditable = !isEditing;
+        btn.innerText = isEditing ? 'Edit' : 'Save';
+        if (!isEditing) contentDiv.focus();
+    };
+
+    window.shareContent = (btn) => {
+        // Mock share
+        alert('Sharing functionality would open platform-specific share intent.');
+    };
+
+    // Tone Selection
+    toneButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            toneButtons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentTone = btn.dataset.tone;
+        });
+    });
+
+    // Generation Logic
+    const generateContent = async () => {
+        const idea = ideaInput.value.trim();
+        const selectedPlatforms = Array.from(document.querySelectorAll('input[name="platform"]:checked')).map(cb => cb.value);
+
+        if (!idea) {
+            alert('Please enter an idea first.');
+            return;
+        }
+        if (selectedPlatforms.length === 0) {
+            alert('Please select at least one platform.');
+            return;
+        }
+
+        generateBtn.classList.add('btn-loading');
+        generateBtn.disabled = true;
+        resultsArea.innerHTML = '<div class="results-placeholder"><p>Manifesting your content...</p></div>';
+
+        const results = [];
+        
+        try {
+            // Generate for each platform
+            for (const platform of selectedPlatforms) {
+                const response = await fetch('/api/generate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ idea, platform, tone: currentTone })
+                });
+                const data = await response.json();
+                results.push({ platform, content: data.content });
+            }
+
+            displayResults(results);
+            
+            // Save to history
+            history.unshift({ idea, platforms: selectedPlatforms, results, timestamp: new Date().getTime() });
+            localStorage.setItem('ghostwriter_history', JSON.stringify(history));
+            updateHistoryUI();
+
+        } catch (error) {
+            console.error('Generation failed:', error);
+            resultsArea.innerHTML = '<div class="results-placeholder"><p>Connection to AI engine failed. Check your API key.</p></div>';
+        } finally {
+            generateBtn.classList.remove('btn-loading');
+            generateBtn.disabled = false;
+        }
+    };
+
+    generateBtn.addEventListener('click', generateContent);
+    updateHistoryUI();
+});
