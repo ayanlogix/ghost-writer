@@ -1,7 +1,7 @@
 # GhostWriter AI | Content Engine
 
-![GhostWriter Preview](https://img.shields.io/badge/Ayanlogix-AI_Content-yellow?style=for-the-badge)
-![Private](https://img.shields.io/badge/Status-Private-red?style=for-the-badge)
+![Operational](https://img.shields.io/badge/Status-Operational-brightgreen?style=for-the-badge)
+[![Live Demo](https://img.shields.io/badge/Live_Demo-GitHub_Pages-blue?style=for-the-badge)](https://ayanlogix.github.io/ghost-writer/)
 
 **GhostWriter AI** is an intelligent content generation engine powered by Gemini AI. It allows users to "manifest" their ideas into professional, witty, or inspiring social media content across multiple platforms like LinkedIn, Twitter, and Instagram.
 
